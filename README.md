@@ -222,15 +222,39 @@ Khởi tạo 1 object mà lớp con sẽ quyết định loại đối tượng 
 ### Decorator
 Cho phép thêm các hành vi mới cho các đối tượng mà không cần thay đổi mã nguồn của lớp đó. Điều này giúp tăng cường khả năng mở rộng và linh hoạt cho các lớp đang làm việc.
 ## Bài 7: Thread
-- __Thread__: là một đơn vị thực thi trong một quá trình (process). Mỗi process có không gian riêng cho stack, nhưng chúng chia sẻ bộ nhớ heap và các tài nguyên khác của quá trình
-- __Process__: là chương trình máy tính, được khởi chạy và nạp vào RAM. Process có thể có nhiều thread chạy song song với nhau
-Trong môi trường đa luồng sẽ có các vấn đề về truy cập tài nguyên chung giữa các luồng thực thi (race condition). Do đó, việc sử dụng các phương pháp như __mutex__, __lock__, __condition_variable__ để giải quyết.
-__Mutex__
+### Thread: 
+là một đơn vị thực thi trong một quá trình (process). Mỗi process có không gian riêng cho stack, nhưng chúng chia sẻ bộ nhớ heap và các tài nguyên khác của quá trình.
+### Process: 
+là chương trình máy tính, được khởi chạy và nạp vào RAM. Process có thể có nhiều thread chạy song song với nhau.<br>
+Trong môi trường đa luồng sẽ có các vấn đề về truy cập tài nguyên chung giữa các luồng thực thi (race condition). Do đó, việc sử dụng các phương pháp như __mutex__, __lock__, __condition_variable__, __atomic__ để giải quyết.<br>
+#### Mutex
 - Mutex đảm bảo rằng chỉ một luồng có thể truy cập vào tài nguyên chia sẻ tại một thời điểm. Điều này giúp tránh tình trạng race condition, nơi dữ liệu có thể bị thay đổi không đồng bộ giữa các luồng
-- Khi một luồng muốn truy cập tài nguyên chia sẻ, nó sẽ lock mutex. Nếu __mutex__ đã bị khoá bởi một luồng khác, luồng đó sẽ phải đợi cho đến khi __mutex__ được giải phóng trước khi có thể tiếp tục
-__Lock__
+- Khi một luồng muốn truy cập tài nguyên chia sẻ, nó sẽ lock mutex. Nếu __mutex__ đã bị khoá bởi một luồng khác, luồng đó sẽ phải đợi cho đến khi __mutex__ được giải phóng trước khi có thể tiếp tục<br>
+#### Lock
 - __Lock_guard__: được dùng để quản lý __mutex__, tự động quản lý việc khoá và mở khoá __mutex__, giảm thiểu nguy cơ phát sinh lỗi khi lập trình đa luồng
-- __Unique_guard__: được dùng để quản lý __mutex__, nhưng cung cấp nhiều tính năng hơn. Có thể khoá và giải phóng linh hoạt, hỗ trợ time-lock
-__Condition_variable__
-
+- __Unique_guard__: được dùng để quản lý __mutex__, nhưng cung cấp nhiều tính năng hơn. Có thể khoá và giải phóng linh hoạt, hỗ trợ time-lock<br>
+#### Condition_variable
+Cho phép một hoặc nhiều luồng chờ đợi cho một điều kiện cụ thể xảy ra. Điều này rất hữu ích khi bạn muốn quản lý sự đồng bộ giữa các luồng mà không cần khoá liên tục, điều này có thể gây ra lãng phí tài nguyên.<br>
+Khái niệm:
+- Condition variable: là một đối tượng cho phép luồng này đợi cho đến khi một điều kiện cụ thể được thoả mãn (thường được kiểm tra thông qua một biến chia sẻ)
+- Synchronized waiting: luồng có thể "ngủ" cho đến khi điều kiện được đáp ứng, sau đó tiếp tục mà không lãng phí CPU
+#### Atomic
+Atomic trong C++ đề cập đến một loại biến hoặc phép toán mà có thể được thực hiện một cách an toàn trong môi trường đa luồng mà không cần sử dụng __mutex__. Điều này có nghĩa là các phép toán trên biến __atomic__ sẽ không bị gián đoạn bởi các luồng khác, giúp tránh được tình trạng race condition.<br>
+## Bài 8: Bất đồng bộ
+Khi __thread__ mất nhiều thời gian và chương trình không chờ đợi, thì bất đồng bộ sẽ dùng để lấy giá trị khi __thread__ xử lý xong dữ liệu.<br>
+### Future
+Cho phép quản lý và truy cập kết quả của một tác vụ bất đồng bộ. Nó cung cấp một cách an toàn để lấy giá trị từ một tác vụ trong luồng khác mà không cần quản lý luồng một cách thủ công.<br>
+Các điểm quan trọng:
+- Tạo future: có thể tạo một đối tượng future từ hàm bất đồng bộ, thường là thông qua `std::async`. Điều này cho phép thực hiện một tác vụ trong một luồng riêng biệt và lấy kết quả sau đó
+- Trạng thái: một đối tượng __future__ có thể có các trạng thái khác nhau<br>
+  Not ready: tác vụ vẫn đang chạy hoặc chưa bắt đầu
+  Ready: tác vụ đã hoàn thành và có thể lấy kết quả
+  Exception: tác vụ gặp lỗi và có thể lấy lỗi từ __future__
+- Phương thức: __get()__, __wait()__, __valid()__
+### Shared_future
+Cho phép nhiều luồng chia sẻ cùng một kết quả từ một tác vụ bất đồng bộ. Điều này có nghĩa là có thể lấy giá trị từ __shared_future__ mà không cần lo lắng về việc kết quả đã được lấy hay chưa.<br>
+Các điểm quan trọng:
+- Chia sẻ kết quả: cho phép nhiều luồng truy cập cùng một kết quả mà không làm mất giá trị của nó. Có thể tạo một __shared_future__ từ một __future__ và sau đó nhiều luồng có thể gọi __get()__ để lấy kết quả
+- Kết quả không bị tính toán lại
+- __Shared_future__ có các phương thức tương tự như __future__
 
