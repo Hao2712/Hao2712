@@ -157,3 +157,80 @@ Thao tác trên Queue:
 - __enqueue__: (thêm phần tử vào cuối hàng đợi) ( nếu đã full mà enqueue nữa thì sẽ bị Stack overflow )
 - __dequeue__: (lấy phần tử từ đầu hàng đợi). ( nếu ko có phần tử nào trong mảng đó thì khi dequeue thì sẽ báo lỗi )
 - __front__: để lấy giá trị của phần tử đứng đầu hàng đợi.
+# C++
+## Bài 1: Class
+Là một cấu trúc dùng để định nghĩa một kiểu dữ liệu tuỳ chỉnh, cho phép nhóm các thuộc tính (data member) và phương thức (member function) lại với nhau. Đây là khái niệm cơ bản trong lập trình OOP, giúp tạo ra các đối tượng (object) với các đặc tính và hành vi riêng.<br>
+Các thành phần chính:
+- Thuộc tính (data member): các biến thuộc class, mô tả trạng thái của đối tượng
+- Phương thức (member function): các hàm thuộc class, mô tả hành vi của đối tượng
+- Phạm vi truy cập: quy địng mức độ truy cập vào các thành viên của class, bao gồm __public__, __protected__, __private__
+- Constructor: sẽ tự động được khởi chạy khi khởi tạo object, set up các tham số ban đầu cho object đó. Khi khởi tạo một object trong 1 hàm, bản chất của nó sẽ tương tự như một biến trong C và lưu ở vùng nhớ trên bộ nhớ stack
+- Destructor: trước khi vùng nhớ trên bộ nhớ stack được thu hồi sẽ tự khởi chạy __destructor__
+## Bài 2: OOP
+### Tính đóng gói (encapsulation)
+Cho phép ẩn giấu dữ liệu bên trong một đối tượng và chỉ cho phép truy cập và thay đổi dữ liệu thông qua các phương thức công khai. Điều này không chỉ bảo vệ dữ liệu mà còn giúp kiểm soát cách thức mà dữ liệu đó được sử dụng.<br>
+Lợi ích:
+- Bảo mật: bằng cách ẩn giấu dữ liệu, giảm thiểu rủi ro từ việc sửa đổi không mong muốn từ bên ngoài. Các thuộc tính private không thể bị truy cập trực tiếp từ bên ngoài class
+- Kiểm soát: có thể thêm logic vào các phương thức getter và setter để kiểm tra giá trị trước khi cho phép thay đổi
+- Dễ bảo trì: khi thay đổi cách mà dữ liệu được lưu trữ bên trong lớp, không cần phải thay đổi mã nguồn ở phần khác trong chương trình, miễn là giao diện công khai không thay đổi
+### Tính kế thừa (inheritance)
+Cho phép một lớp con kế thừa thuộc tính và phương thức từ lớp cha.<br>
+Các loại kế thừa:
+- Kế thừa đơn: một lớp con kế thừa từ một lớp cha duy nhất. Đây là kiểu kế thừa đơn giản nhất
+- Kế thừa đa cấp: lớp con có thể trở thành lớp cha cho lớp khác, tạo thành một chuỗi kế thừa
+- Kế thừa đa hình: một lớp cso thể kế thừa từ nhiều lớp cha
+- Kế thừa ảo: khi một lớp con kế thừa từ nhiều lớp cha, có thể xảy ra tình trạng các lớp cha có cùng thuộc tính, phương thức. Kế thừa ảo được sử dụng để giải quyết tình trạng này.
+Ghi đè phương thức: khi lớp con có phương thức cùng tên với phương thức trong lớp cha, có thể ghi đè phương thức đó. Để cho phép ghi đè, phương thức trong lớp cha cần phải được khai báo virtual.
+### Tính đa hình (polymorphism)
+Là một trong những đặc điểm quan trọng của __OOP__. Cho phép các đối tượng khác nhau phản hồi theo những cách khác nhau đối với cùng một phương thức, dựa trên kiểu của đối tượng. Đa hình giúp tăng cường tính linh hoạt và mở rộng của mã nguồn.<br>
+Các loại đa hình:
+- Compiler: được gọi là đa hình biên dịch, xảy ra khi quyết định gọi phương thức được thực hiện tại thời điểm biên dịch. Hai kỹ thuật phổ biến cho compiler:
+  - Method overloading: nhiều phương thức có cùng tên nhưng khác tham số (số lượng hoặc kiểu tham số)
+  - Operator overloading: cho phép định nghĩa cách mà các toán tử hoạt động trên các đối tượng tuỳ chỉnh
+- Run-time: xảy ra khi quyết định gọi phương thức được thực hiện tại thời điểm chạy chương trình. Thường được thực hiện thông qua kế thừa và __virtual method__. __Virtual method__: khi một phương thức trong lớp cha được khai báo là __virtual__, các lớp có thể ghi đè lên nó. Khi gọi phương thức này thông qua một con trỏ hoặc tham chiếu của lớp cha, phương thức của lớp con sẽ được thực hiện
+### Tính trừu tượng (Abstract)
+Cho phép làm việc với các khái niệm phức tạp bằng cách chỉ tập trung vào các thuộc tính và hành vi cần thiết, trong khi ẩn giấu các chi tiết không cần thiết. Tính trừu tượng giúp đơn giản hoá việc phát triển và quản lý phần mềm. Cho phép tạo ra các lớp mà chỉ định các phương thức mà không cần cung cấp cách thực hiện ngay lập tức.
+## Bài 3: Standard template library C
+__STL__ - Standard Template Library là một thư viện trong ngôn ngữ lập trình C++ cung cấp một số tập hợp các template classes và function để thực hiện các cấu trúc dữ liệu và một số thuật toán phổ biến. Một số thành phần chính của STL: Container Iterator Algorithms Funtors Container là một cấu trúc dữ liệu chứa nhiều phần tử theo một cách cụ thể.<br>
+Một số container tiêu biểu:
+- __Vector__
+- __Map__
+- __List__
+- __Array__
+- __Vector__
+__Iterator__: là một khái niệm giúp truy cập các phần tử của một container, một cách tuần tự mà không cần phải biết cấu trúc nội bộ của container. Nó đóng vai trò như một con trỏ, nhưng mạnh mẽ và an toàn hơn. Iterator giúp dễ dàng duyệt qua và thao tác với các phần tử trong container một cách linh hoạt bằng cách dùng các method như __begin()__, __end()__ và các phép toán tử để duyệt qua
+## Bài 4: Template - Lambda
+### Template
+Trong C++, __template__ là một tính năng cho phép bạn viết mã tổng quát, giúp tạo ra các hàm và lớp có thể hoạt động với nhiều kiểu dữ liệu khác nhau mà không cần phải viết mã riêng cho mỗi kiểu. Điều này rất hữu ích trong việc tối ưu hóa mã nguồn và tái sử dụng.
+- __Function Templates__: Cho phép bạn định nghĩa một hàm tổng quát mà có thể nhận các kiểu dữ liệu khác nhau
+- __Class Templates__: Cho phép bạn định nghĩa một lớp tổng quát
+### Lambda
+Là một cách để định nghĩa các hàm ẩn danh (anonymous functions) mà không cần phải khai báo tên hàm. __Lambda__ thường được sử dụng khi bạn cần một hàm tạm thời cho một tác vụ cụ thể, như trong các thuật toán __STL__ hoặc các callback.
+## Bài 5: Smart pointer
+Là một cơ chế quản lý bộ nhớ tự động, tự động giải phóng tài nguyên khi không còn sử dụng. Sử dụng đặc tính destructor trong class để tự động giải phóng khi không dùng nữa.<br>
+Có 3 loại: __unique pointer__, __shared pointer__, __weak pointer__.
+- __Unique pointer__: 1 vùng nhớ chỉ được phép có 1 con trỏ trỏ tới. Sẽ tự động thu hồi vùng nhớ khi pointer bị huỷ. Có thể chuyển quyền sở hữu vùng nhớ qua con trỏ khác
+- __Shared pointer__: 1 vùng nhớ có thể có nhiều con trỏ trỏ tới. Sẽ có 1 biến count để theo dõi số pointer trỏ tới vùng nhớ đó. Nếu count = 0 thì vùng nhớ sẽ được thu hồi
+- __Weak pointer__: sử dụng chung với __shared pointer__, chỉ có thể giám sát vùng nhớ mà nó trỏ vào. Không thể tác động lên vùng nhớ đó
+## Bài 6: Design pattern
+### Singleton
+Đảm bảo rằng một class chỉ có một thể hiện duy nhất và cung cấp một điểm truy cập toàn cục dẫn đến thể hiện đó. VD: truy cập tới vùng địa chỉ của GPIO thì địa chỉ của GPIO là cố định Nếu khởi tạo nhiều đối tượng để truy cập GPIO, mỗi đối tượng sẽ chiếm một vùng nhớ khác nhau nhưng đều trỏ tới cùng địa chỉ GPIO, gây lãng phí bộ singleton khởi tạo 1 lần, những thằng khác chỉ là con trỏ trỏ tới địa chỉ của object, giúp tối ưu bộ nhớ, tránh khởi tạo nhiều object
+### Observer
+Cho phép một đối tượng (subject hay publisher) thông báo cho nhiều đối tượng khác (observer hay subcribers) về các thay đổi trạng thái của nó mà không cần biết rõ về chúng.
+### Factory
+Khởi tạo 1 object mà lớp con sẽ quyết định loại đối tượng nào.
+### Decorator
+Cho phép thêm các hành vi mới cho các đối tượng mà không cần thay đổi mã nguồn của lớp đó. Điều này giúp tăng cường khả năng mở rộng và linh hoạt cho các lớp đang làm việc.
+## Bài 7: Thread
+- __Thread__: là một đơn vị thực thi trong một quá trình (process). Mỗi process có không gian riêng cho stack, nhưng chúng chia sẻ bộ nhớ heap và các tài nguyên khác của quá trình
+- __Process__: là chương trình máy tính, được khởi chạy và nạp vào RAM. Process có thể có nhiều thread chạy song song với nhau
+Trong môi trường đa luồng sẽ có các vấn đề về truy cập tài nguyên chung giữa các luồng thực thi (race condition). Do đó, việc sử dụng các phương pháp như __mutex__, __lock__, __condition_variable__ để giải quyết.
+__Mutex__
+- Mutex đảm bảo rằng chỉ một luồng có thể truy cập vào tài nguyên chia sẻ tại một thời điểm. Điều này giúp tránh tình trạng race condition, nơi dữ liệu có thể bị thay đổi không đồng bộ giữa các luồng
+- Khi một luồng muốn truy cập tài nguyên chia sẻ, nó sẽ lock mutex. Nếu __mutex__ đã bị khoá bởi một luồng khác, luồng đó sẽ phải đợi cho đến khi __mutex__ được giải phóng trước khi có thể tiếp tục
+__Lock__
+- __Lock_guard__: được dùng để quản lý __mutex__, tự động quản lý việc khoá và mở khoá __mutex__, giảm thiểu nguy cơ phát sinh lỗi khi lập trình đa luồng
+- __Unique_guard__: được dùng để quản lý __mutex__, nhưng cung cấp nhiều tính năng hơn. Có thể khoá và giải phóng linh hoạt, hỗ trợ time-lock
+__Condition_variable__
+
+
