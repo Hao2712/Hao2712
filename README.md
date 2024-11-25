@@ -102,7 +102,7 @@ Các điểm chính về con trỏ:
 - Heap được dùng để lưu trữ vùng nhớ cho những biến được cấp phát động
 - Stack được quản lý bởi hệ điều hành, dữ liệu được lưu trong stack sẽ tự động giải phóng khi hàm thực hiện xong chương trình
 - Heap được quản lý bởi lập trình viên, chỉ được giải phóng bằng free
-## Bài 5:Extern - Static - Volatile - Register
+## Bài 5: Extern - Static - Volatile - Register
 ### Extern
 Được sử dụng để thông báo rằng một biến hoặc hàm được khai báo ở một nơi khác trong chương trình hoặc trong một file khác. Điều nàu giúp chương trình hiểu rằng biến hoặc hàm đã được định nghĩa và sẽ được sử dụng từ một vị trí khác giúp quản lý sự liên kết giữa các thành phần khác nhau của chương trình hoặc giữa các file nguồn.
 ### Static
